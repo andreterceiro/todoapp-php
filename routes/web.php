@@ -36,13 +36,13 @@ Route::get('/tasks/delete/{id}', function ($id) {
 });
 
 // Need to change to POST
-Route::get('/tasks/saveNewTask/{task}', function ($task) {
-    return (new TasksController)->saveNewTask($task);
+Route::post('/tasks/save', function () {
+    return (new TasksController)->save();
 });
 
 // Need to change to POST
-Route::get('/tasks/saveAll/{tasks}', function ($tasks) {
-    return (new TasksController)->saveAll($tasks);
+Route::post('/tasks/saveAll', function () {
+    return (new TasksController)->saveAll();
 });
 
 /*
