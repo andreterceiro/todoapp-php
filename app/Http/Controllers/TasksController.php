@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use \App\Models\Task;
+use Illuminate\Http\Request;
 
 class TasksController extends Controller
 {
@@ -75,21 +76,16 @@ class TasksController extends Controller
     /**
      * Saves a new task (parameter)
      * 
-     * @param String $task Uncoded JSON representing the task
+     * @param String $requestData Uncoded JSON representing the task
      * 
      * @access public
      * @return null
      */
-    public function saveNewTask($task) {
-        // var_dump($task);
-
-        /*
-            $task = json_decode($task);
-            $newTaskData = Task::find($task->id);
-            $newTaskData->checked = $task->checked;
-            $newTaskData->name = $task->name;
-            $newTaskData->save();
-        */
+    public function save() {
+        $task = new Task;
+        $task->name = request('name');
+        $task->checked = request('checked');
+        $task->save();
     }
 
     /**
@@ -100,19 +96,22 @@ class TasksController extends Controller
      * @access public
      * @return null
      */
-    public function saveAll($tasks) {
-        // var_dump($tasks);
+    public function saveAll() {
+        $i = 0;
+        while (true) {
+            $taskOfRequest = request($i);
 
-        /*
-            $tasks = json_decode($tasks);
-
-            foreach($tasks as $task) {
-                $newTaskData = Task::find($task->id);
-                $newTaskData->checked = $task->checked;
-                $newTaskData->name = $task->name;
-                $newTaskData->save();
+            if (is_null($taskOfRequest)) {
+                break;
             }
-        */
+
+            $taskToSave = Task::find($taskOfRequest['id']);
+            $taskToSave->name = $taskOfRequest['name'];
+            $taskToSave->checked = $taskOfRequest['checked'];
+            $taskToSave->save();
+    
+            $i++;
+        }
     }
 
 
