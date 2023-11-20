@@ -50,18 +50,6 @@ class TasksController extends Controller
     }
 
     /**
-     * Return tha last ID plus 1
-     * 
-     * @access public
-     * @return null Do not return, render response
-     */
-    public function getNewId() {
-        $task = Task::orderBy('id', 'desc')->get();
-
-        return $task[0]->id + 1;
-    }
-
-    /**
      * Delete a registry by its ID
      *
      * @param String $id ID of the entry
